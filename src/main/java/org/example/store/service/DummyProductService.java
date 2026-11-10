@@ -36,8 +36,7 @@ public class DummyProductService {
 
     @Cacheable(value = "dummyProductsBySearchQuery", key = "#query")
     public Flux<DummyProductDTO> searchDummyProducts(String query) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/products/search").queryParam("q", query).build())
+        return webClient.get().uri(uriBuilder -> uriBuilder.path("/products/search").queryParam("q", query).build())
                 .retrieve()
                 .onStatus(HttpStatusCode::isError,
                         clientResponse -> Mono.error(new DummyProductFetchException(
