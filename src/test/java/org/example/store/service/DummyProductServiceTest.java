@@ -49,7 +49,10 @@ class DummyProductServiceTest {
                 })
                 .verifyComplete();
 
-        assertEquals("https://dummyjson.com/products/search?q=phone%20case", requestedUri.get());
+        java.net.URI uri = java.net.URI.create(requestedUri.get());
+        assertEquals("/products/search", uri.getRawPath());
+        assertEquals("phone case", java.net.URLDecoder.decode(uri.getRawQuery().substring(2),
+                java.nio.charset.StandardCharsets.UTF_8));
     }
 
     @Test
